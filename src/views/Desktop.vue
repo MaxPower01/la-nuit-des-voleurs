@@ -19,43 +19,47 @@
           />
         </div>
         <!-- Une compilation du cash total ammasser dans notre téléversement -->
-        <h1 class="cashTotal">20 000$</h1>
+        <h1 class="cashTotal">Argent transféré</h1>
+        <p class="cashTotal">{{ cash }} $</p>
         <!-- une option pour se déconnecter lorsqu'on a fini -->
         <h4 class="deconnexion">Déconnexion</h4>
       </div>
       <!-- ./Menu -->
 
-      <!-- Données -->
-      <div class="data-container">
+      <!-- Nouveau compte -->
+      <div class="new-account-container">
         <div class="flex-container">
           <div class="text-center">
             <h3>Numéro de compte</h3>
-            <input type="text" />
+            <input
+              v-model="accountInput"
+              type="text"
+              placeholder="Numéro de compte"
+            />
           </div>
           <div class="text-center">
             <h3>Mot de passe</h3>
-            <input type="password" />
-          </div>
-          <div class="text-center-alt">
-            <p>vers le compte</p>
-          </div>
-          <div class="text-center">
-            <h3>ID du compte</h3>
-            <input type="text" />
+            <input
+              v-model="passwordInput"
+              type="password"
+              placeholder="Mot de passe"
+            />
           </div>
         </div>
         <div class="button-container">
-          <button class="button-add">Entrez</button>
+          <button class="button-add" @click="addAccount">
+            Accéder au compte
+          </button>
         </div>
       </div>
-      <!-- Données -->
+      <!-- ./Nouveau compte -->
 
       <!-- Liste -->
       <div class="list">
         <!-- Account -->
         <div
           class="account"
-          v-for="account in hackedAccounts"
+          v-for="account in availableAccounts"
           :key="account.id"
         >
           <!-- Informations -->
@@ -88,9 +92,11 @@
             v-if="progressBarWidth == 100"
             class="account-button-terminer"
           >
-            Téléversement terminé
+            Transfert terminé
           </button>
-          <button v-else class="account-button">Téléverser</button>
+          <button v-else class="account-button" @click="transfer">
+            Transférer
+          </button>
           <!-- ./Téléchargement -->
         </div>
         <!-- ./Account -->
@@ -114,6 +120,10 @@ export default {
   data() {
     return {
       connected: false,
+      accountInput: "",
+      passwordInput: "",
+      cash: 0,
+      availableAccounts: [],
       progressBarWidth: 0,
       etat: "Pas Transferé"
     };
@@ -124,23 +134,49 @@ export default {
       return "width:" + this.progressBarWidth + "%";
     },
 
-    hackedAccounts() {
-      return this.$store.getters.hackedAccounts;
+    accounts() {
+      return this.$store.getters.accounts;
     }
   },
 
   created() {
-    this.$store.dispatch("getFirestoreAccounts");
+    this.$store.dispatch("getFirestoreData");
   },
 
   methods: {
+    // TODO : Mettre à jour l'utilisateur et les comptes lorsqu'il y a transfert
     connect() {
       this.connected = true;
     },
 
-    updateAccounts() {
-      this.accounts = this.hackedAccounts;
-    }
+    addAccount() {
+      let number;
+
+      this.availableAccounts.forEach(account => {
+        if (account.number == this.accountInput) {
+          number = account.number;
+        }
+      });
+
+      this.accounts.forEach(account => {
+        if (
+          account.number == this.accountInput &&
+          account.password == this.passwordInput &&
+          account.number != number
+        ) {
+          this.availableAccounts.push(account);
+        }
+      });
+
+      this.resetAccountInputs();
+    },
+
+    resetAccountInputs() {
+      this.accountInput = "";
+      this.passwordInput = "";
+    },
+
+    transfer() {}
   }
 };
 </script>
@@ -254,7 +290,7 @@ input:focus {
   border-bottom: 1px solid #696969;
 }
 
-.data-container {
+.new-account-container {
   background-color: #ececec;
   /* height: 100%; */
   padding-left: 20%;

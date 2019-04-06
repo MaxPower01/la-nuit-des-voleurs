@@ -63,7 +63,7 @@ $icon-container-width: 50%;
   background: #242424;
   bottom: 0;
   position: fixed;
-  height: 15%;
+  height: 100px;
   border-top: solid;
   overflow: hidden;
 }

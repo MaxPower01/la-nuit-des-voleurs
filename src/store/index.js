@@ -9,6 +9,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    hacking: false,
+
     user: {
       name: "",
       cash: 0,
@@ -32,6 +34,10 @@ export default new Vuex.Store({
   },
 
   getters: {
+    hacking(state) {
+      return state.hacking;
+    },
+
     user(state) {
       return state.user;
     },
@@ -58,7 +64,15 @@ export default new Vuex.Store({
   },
 
   actions: {
-    getFirestoreAccounts(context) {
+    hackingTrue(context) {
+      context.commit("hackingTrue");
+    },
+
+    hackingFalse(context) {
+      context.commit("hackingFalse");
+    },
+
+    getFirestoreData(context) {
       const accounts = [];
 
       db.collection("accounts")
@@ -78,6 +92,19 @@ export default new Vuex.Store({
             };
             accounts.push(account);
           });
+        });
+
+      db.collection("users")
+        .doc("UfoRMZX1Asw7ADsdQXer")
+        .get()
+        .then(doc => {
+          const user = {
+            id: doc.id,
+            name: doc.data().name,
+            cash: doc.data().cash,
+            timeWhenFinished: doc.data().timeWhenFinished
+          };
+          context.commit("setUser", user);
         });
 
       context.commit("setAccounts", accounts);
@@ -119,11 +146,12 @@ export default new Vuex.Store({
         .then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
             var docRef = db.collection("accounts").doc(doc.id);
-
             return docRef.update({
               available: false,
               hacked: false,
-              hackingLevel: 0
+              hackingLevel: 0,
+              transfered: false,
+              transferingLevel: 0
             });
           });
         });
@@ -131,12 +159,24 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    hackingTrue(state) {
+      state.hacking = true;
+    },
+
+    hackingFalse(state) {
+      state.hacking = false;
+    },
+
     connected(state) {
       state.connected = true;
     },
 
     setAccounts(state, accounts) {
       state.accounts = accounts;
+    },
+
+    setUser(state, user) {
+      state.user = user;
     },
 
     timerUpdated(state) {
