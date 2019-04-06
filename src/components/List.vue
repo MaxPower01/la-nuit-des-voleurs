@@ -34,6 +34,7 @@
         </div>
         <div class="buttons">
           <span
+            readonly
             v-if="account.hackingLevel == 0"
             class="account-button"
             @click="hack(account)"

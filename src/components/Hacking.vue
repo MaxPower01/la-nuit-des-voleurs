@@ -90,7 +90,6 @@ export default {
     },
 
     updateInput(keyValue) {
-      // Maximum de 10 caractères par accounts :
       if (this.input.length < 10) {
         this.input += keyValue;
       }
@@ -142,7 +141,6 @@ input[type="text"] {
   background-color: #242424;
   box-sizing: border-box;
   border: 2px solid #f0f0f0;
-  // border-radius: 75px;
   color: #f0f0f0;
   padding: 15px 10px;
   text-align: center;
