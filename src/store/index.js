@@ -131,6 +131,10 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    connected(state) {
+      state.connected = true;
+    },
+
     setAccounts(state, accounts) {
       state.accounts = accounts;
     },

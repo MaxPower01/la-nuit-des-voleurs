@@ -3,7 +3,7 @@
     <!-- Login -->
     <div v-if="!connected">
       <div class="patch"></div>
-      <login></login>
+      <login v-on:connected="connect"></login>
     </div>
     <!-- ./Login -->
 
@@ -29,20 +29,19 @@
       <div class="data-container">
         <div class="flex-container">
           <div class="text-center">
-            <h3>ID du compte</h3>
-            <input readonly type="text" />
+            <h3>Numéro de compte</h3>
+            <input type="text" />
           </div>
           <div class="text-center">
             <h3>Mot de passe</h3>
-            <input readonly type="text" />
+            <input type="password" />
           </div>
           <div class="text-center-alt">
             <p>vers le compte</p>
           </div>
           <div class="text-center">
-            <!-- notre compte bancaire -->
             <h3>ID du compte</h3>
-            <input readonly type="text" />
+            <input type="text" />
           </div>
         </div>
         <div class="button-container">
@@ -53,6 +52,7 @@
 
       <!-- Liste -->
       <div class="list">
+        <!-- Account -->
         <div
           class="account"
           v-for="account in hackedAccounts"
@@ -84,7 +84,6 @@
           <div class="loading-container">
             <div class="progress-bar" :style="progressBarPercentage"></div>
           </div>
-          <!-- Seulement un des boutons est affiché selon une condition + j'aimerai qu'ils disparait a la fin -->
           <button
             v-if="progressBarWidth == 100"
             class="account-button-terminer"
@@ -94,6 +93,7 @@
           <button v-else class="account-button">Téléverser</button>
           <!-- ./Téléchargement -->
         </div>
+        <!-- ./Account -->
       </div>
       <!-- ./Liste -->
     </div>
@@ -111,16 +111,11 @@ export default {
     Login
   },
 
-  created() {
-    this.$store.dispatch("getFirestoreAccounts");
-  },
-
   data() {
     return {
-      connected: true,
+      connected: false,
       progressBarWidth: 0,
-      etat: "Pas Transferé",
-      accounts: []
+      etat: "Pas Transferé"
     };
   },
 
@@ -134,7 +129,15 @@ export default {
     }
   },
 
+  created() {
+    this.$store.dispatch("getFirestoreAccounts");
+  },
+
   methods: {
+    connect() {
+      this.connected = true;
+    },
+
     updateAccounts() {
       this.accounts = this.hackedAccounts;
     }
@@ -218,7 +221,7 @@ h1 {
 
 //page 2
 
-input[type="text"] {
+input {
   background-color: #f8f8f8;
   box-sizing: border-box;
   border: 2px solid #a0a0a0;
@@ -228,7 +231,7 @@ input[type="text"] {
   text-align: center;
 }
 
-input[type="text"]:focus {
+input:focus {
   border-color: #242424;
 }
 

@@ -5,43 +5,62 @@
       alt="Logo Neocuivre"
       class="logoNeo"
     />
-    <div class="containerInput">
-      <p>Utilisateur</p>
-      <!-- Le joueur entre l'utilisateur du comptable-->
-      <input readonly type="text" />
-      <p>Mot de passe</p>
-      <!-- Le joueur met le mot de passe du comptable-->
-      <input readonly type="text" />
+    <div class="input-container">
+      <h3>Nom d'utilisateur</h3>
+      <input type="text" v-model="userInput" />
+      <h3>Mot de passe</h3>
+      <input type="password" v-model="passwordInput" />
     </div>
-    <!-- se connect à la section logiciel-->
-    <button class="connexion-button">Connexion</button>
+    <button @click="connect">Connexion</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "computer",
+  name: "login",
 
   data() {
     return {
-      connected: true,
-      // Les données qui sont affichées sur l'interface et qui peuvent changer
-      title: "Liste de comptes bancaires",
-      nom: "Nom du compte Bancaire",
-      argent: 20000,
-      progressBarWidth: 0,
-      banque: "Banque National du Canada",
-      etat: "Pas Transferé"
+      user: "Max Power",
+      userInput: "",
+      password: "passw0rd",
+      passwordInput: ""
     };
   },
 
-  computed: {
-    progressBarPercentage() {
-      return "width:" + this.progressBarWidth + "%";
-    },
-
-    hackedAccounts() {
-      return this.$store.getters["LaNuitDesVoleurs/hackedAccounts"];
+  methods: {
+    connect() {
+      // Tout bon
+      if (
+        this.userInput === this.user &&
+        this.passwordInput === this.password
+      ) {
+        this.$emit("connected");
+      } else {
+        // Nom d'utilisateur incorrect
+        if (
+          this.userInput != this.user &&
+          this.passwordInput === this.password
+        ) {
+          this.$notify({
+            title: "Erreur",
+            message: "Nom d'utilisateur incorrect.",
+            type: "error"
+          });
+        }
+        // Mot de passe incorrect ou les 2 incorrects
+        else if (
+          (this.passwordInput != this.password &&
+            this.userInput === this.user) ||
+          (this.passwordInput != this.password && this.userInput != this.user)
+        ) {
+          this.$notify({
+            title: "Erreur",
+            message: "Mot de passe incorrect.",
+            type: "error"
+          });
+        }
+      }
     }
   }
 };
@@ -89,17 +108,13 @@ h1 {
   padding-bottom: 50px;
 }
 
-.containerInput {
+.input-container {
   text-align: center;
   width: auto;
   border-top: 1px solid #e0e0e0;
 }
 
-.containerInput p {
-  font-weight: bold;
-}
-
-.connexion-button {
+button {
   background-color: #ececec;
   border: 2px solid #a0a0a0;
   border-radius: 9px;
@@ -109,7 +124,7 @@ h1 {
   padding: 7px 10px;
   padding-left: 50px;
   padding-right: 50px;
-  //cursor: pointer;
+  cursor: pointer;
   font-family: "Share Tech Mono", monospace;
   text-align: center;
   font-size: 1em;
@@ -121,9 +136,7 @@ h1 {
   width: auto;
 }
 
-//page 2
-
-input[type="text"] {
+input {
   background-color: #f8f8f8;
   box-sizing: border-box;
   border: 2px solid #a0a0a0;
@@ -133,7 +146,7 @@ input[type="text"] {
   text-align: center;
 }
 
-input[type="text"]:focus {
+input:focus {
   border-color: #242424;
 }
 

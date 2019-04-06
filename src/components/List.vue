@@ -20,7 +20,7 @@
         </tr>
         <tr>
           <th>Mot de passe</th>
-          <td v-if="!account.hacked">INCONNU</td>
+          <td v-if="!account.hacked">**********</td>
           <td v-else>{{ account.password }}</td>
         </tr>
       </table>
