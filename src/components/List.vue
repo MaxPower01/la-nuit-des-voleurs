@@ -61,11 +61,11 @@ export default {
     },
 
     availableAccounts() {
-      return this.$store.getters["LaNuitDesVoleurs/availableAccounts"];
+      return this.$store.getters.availableAccounts;
     },
 
     accounts() {
-      return this.$store.getters["LaNuitDesVoleurs/accounts"];
+      return this.$store.getters.accounts;
     }
   },
 
@@ -76,20 +76,14 @@ export default {
         this.hackingInProgress = true;
         let i = 0;
         let interval = setInterval(() => {
-          this.$store.dispatch(
-            "LaNuitDesVoleurs/incrementhackingLevel",
-            hackedAccount
-          );
+          this.$store.dispatch("incrementhackingLevel", hackedAccount);
           // À FAIRE : Réétablir les bonnes valeurs de "i" ici et le niveau d'incrémentation dans le store
           i += 1;
           if (i == 10) {
             clearInterval(interval);
             this.hackingInProgress = false;
-            this.$store.dispatch("LaNuitDesVoleurs/hackAccount", hackedAccount);
-            this.$store.dispatch(
-              "LaNuitDesVoleurs/updateFirestoreAccount",
-              hackedAccount
-            );
+            this.$store.dispatch("hackAccount", hackedAccount);
+            this.$store.dispatch("updateFirestoreAccount", hackedAccount);
           }
         }, 1000);
       }

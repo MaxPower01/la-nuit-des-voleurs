@@ -20,10 +20,10 @@
 
       <table readonly>
         <tr>
-          <td v-on:click="submit()">
+          <td v-on:click="submit">
             <i class="el-icon-check"></i>
           </td>
-          <td v-on:click="resetCode()">
+          <td v-on:click="resetCode">
             <i class="el-icon-close"></i>
           </td>
         </tr>

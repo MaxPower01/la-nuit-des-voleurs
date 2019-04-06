@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Keyboard from "@/components/piece-maitresse/Keyboard.vue";
+import Keyboard from "@/components/Keyboard.vue";
 
 export default {
   name: "hacking",
@@ -37,21 +37,21 @@ export default {
 
   computed: {
     accounts() {
-      return this.$store.getters["LaNuitDesVoleurs/accounts"];
+      return this.$store.getters.accounts;
     },
 
     userCash() {
-      return this.$store.getters["LaNuitDesVoleurs/user"].cash;
+      return this.$store.getters.user.cash;
     },
 
     timerIsActive() {
-      return this.$store.getters["LaNuitDesVoleurs/timer"].active === true;
+      return this.$store.getters.timer.active === true;
     }
   },
 
   methods: {
     reset() {
-      this.$store.dispatch("LaNuitDesVoleurs/reset");
+      this.$store.dispatch("reset");
     },
 
     verifyCode() {
@@ -62,11 +62,8 @@ export default {
       this.accounts.forEach(account => {
         if (this.input === account.number) {
           if (account.available === false) {
-            this.$store.dispatch("LaNuitDesVoleurs/accessAccount", account);
-            this.$store.dispatch(
-              "LaNuitDesVoleurs/updateFirestoreAccount",
-              account
-            );
+            this.$store.dispatch("accessAccount", account);
+            this.$store.dispatch("updateFirestoreAccount", account);
             this.getAccountCash(account.cash);
             this.successNotification();
           } else {
@@ -85,7 +82,7 @@ export default {
     },
 
     getAccountCash(cash) {
-      this.$store.dispatch("LaNuitDesVoleurs/getAccountCash", cash);
+      this.$store.dispatch("getAccountCash", cash);
     },
 
     startTimer() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="computer">
+  <div class="desktop">
     <!-- Login -->
     <div v-if="!connected">
       <div class="patch"></div>
@@ -13,7 +13,7 @@
       <div class="menu">
         <div class="contenerLogoBlanc">
           <img
-            src="../../assets/logo_Neocuivre_Blanc.png"
+            src="../assets/logo_Neocuivre_Blanc.png"
             alt="logo"
             class="logoBlanc"
           />
@@ -102,21 +102,17 @@
 </template>
 
 <script>
-// import {
-// fb,
-//   db
-// } from "../../firebase.js";
-import Login from "@/components/piece-maitresse/Login.vue";
+import Login from "@/components/Login.vue";
 
 export default {
-  name: "computer",
+  name: "desktop",
 
   components: {
     Login
   },
 
   created() {
-    this.$store.dispatch("LaNuitDesVoleurs/getFirestoreAccounts");
+    this.$store.dispatch("getFirestoreAccounts");
   },
 
   data() {
@@ -134,7 +130,7 @@ export default {
     },
 
     hackedAccounts() {
-      return this.$store.getters["LaNuitDesVoleurs/hackedAccounts"];
+      return this.$store.getters.hackedAccounts;
     }
   },
 
@@ -147,7 +143,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.computer {
+.desktop {
   text-align: left;
   margin: 0 !important;
   padding: 0 !important;

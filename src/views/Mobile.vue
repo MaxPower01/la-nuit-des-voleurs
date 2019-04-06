@@ -1,5 +1,5 @@
 <template>
-  <div class="game full-height">
+  <div class="mobile full-height">
     <timer></timer>
     <hacking
       v-if="activeSection === 'hacking'"
@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import Timer from "@/components/piece-maitresse/Timer.vue";
-import Hacking from "@/components/piece-maitresse/Hacking.vue";
-import List from "@/components/piece-maitresse/List.vue";
-import BottomMenu from "@/components/piece-maitresse/BottomMenu.vue";
+import Timer from "@/components/Timer.vue";
+import Hacking from "@/components/Hacking.vue";
+import List from "@/components/List.vue";
+import BottomMenu from "@/components/BottomMenu.vue";
 
 export default {
-  name: "game",
+  name: "mobile",
 
   components: {
     Timer,
@@ -27,12 +27,12 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("LaNuitDesVoleurs/getFirestoreAccounts");
+    this.$store.dispatch("getFirestoreAccounts");
   },
 
   computed: {
     activeSection() {
-      return this.$store.getters["LaNuitDesVoleurs/menu"].activeSection;
+      return this.$store.getters.menu.activeSection;
     }
   },
 
@@ -42,7 +42,7 @@ export default {
     },
 
     updateTimer() {
-      this.$store.dispatch("LaNuitDesVoleurs/updateTimer");
+      this.$store.dispatch("updateTimer");
     }
   },
 
@@ -52,7 +52,4 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-// ...
-</style>
+<style scoped lang="scss"></style>

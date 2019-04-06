@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <img
-      src="../../assets/logo_Neocuivre_Noir.png"
+      src="../assets/logo_Neocuivre_Noir.png"
       alt="Logo Neocuivre"
       class="logoNeo"
     />

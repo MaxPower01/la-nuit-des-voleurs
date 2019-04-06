@@ -12,7 +12,7 @@ export default {
   name: "timer",
   computed: {
     timeLeftString() {
-      return this.$store.getters["LaNuitDesVoleurs/timer"].timeLeft.display;
+      return this.$store.getters.timer.timeLeft.display;
     }
   }
 };

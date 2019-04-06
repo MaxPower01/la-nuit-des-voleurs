@@ -4,13 +4,13 @@
       <div class="icon-container" v-on:click="displayHacking()">
         <img
           v-if="activeSection === 'hacking'"
-          src="../../assets/icon-hacking-active.png"
+          src="../assets/icon-hacking-active.png"
           alt="Hacking"
           class="icon"
         />
         <img
           v-else
-          src="../../assets/icon-hacking.png"
+          src="../assets/icon-hacking.png"
           alt="Hacking"
           class="icon icon-side"
         />
@@ -18,13 +18,13 @@
       <div class="icon-container" v-on:click="displayList()">
         <img
           v-if="activeSection === 'list'"
-          src="../../assets/liste-active.png"
+          src="../assets/liste-active.png"
           alt="List"
           class="icon"
         />
         <img
           v-else
-          src="../../assets/liste.png"
+          src="../assets/liste.png"
           alt="List"
           class="icon icon-side"
         />
@@ -39,17 +39,17 @@ export default {
 
   computed: {
     activeSection() {
-      return this.$store.getters["LaNuitDesVoleurs/menu"].activeSection;
+      return this.$store.getters.menu.activeSection;
     }
   },
 
   methods: {
     displayHacking() {
-      this.$store.dispatch("LaNuitDesVoleurs/displaySection", "hacking");
+      this.$store.dispatch("displaySection", "hacking");
     },
 
     displayList() {
-      this.$store.dispatch("LaNuitDesVoleurs/displaySection", "list");
+      this.$store.dispatch("displaySection", "list");
     }
   }
 };
