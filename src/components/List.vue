@@ -55,10 +55,6 @@ export default {
       return this.$store.getters.hacking;
     },
 
-    progressBarPercentage() {
-      return "width:" + this.progressBarWidth + "%";
-    },
-
     availableAccounts() {
       return this.$store.getters.availableAccounts;
     },

@@ -73,29 +73,33 @@
               <p>{{ account.bank }}</p>
             </div>
             <div class="account-data">
-              <h4>Montant</h4>
+              <h4>Solde</h4>
               <p>{{ account.cash }} $</p>
             </div>
             <div class="account-data">
               <h4>État</h4>
-              <p v-if="progressBarWidth == 100">Téléversement terminé</p>
-              <p v-else>{{ etat }}</p>
+              <p v-if="account.transfered == true">Transféré</p>
+              <p v-else>Accessible</p>
             </div>
           </div>
           <!-- ./Informations -->
 
           <!-- Téléchargement -->
           <div class="loading-container">
-            <div class="progress-bar" :style="progressBarPercentage"></div>
+            <div
+              class="progress-bar"
+              :style="{ width: account.transferingLevel + '%' }"
+            ></div>
           </div>
           <button
-            v-if="progressBarWidth == 100"
-            class="account-button-terminer"
+            v-if="progressBarWidth != 100"
+            class="account-button"
+            @click="transfer(account)"
           >
-            Transfert terminé
-          </button>
-          <button v-else class="account-button" @click="transfer">
             Transférer
+          </button>
+          <button v-else class="account-button-terminer">
+            Transfert terminé
           </button>
           <!-- ./Téléchargement -->
         </div>
@@ -122,10 +126,8 @@ export default {
       connected: false,
       accountInput: "",
       passwordInput: "",
-      cash: 0,
       availableAccounts: [],
-      progressBarWidth: 0,
-      etat: "Pas Transferé"
+      progressBarWidth: 0
     };
   },
 
@@ -136,6 +138,14 @@ export default {
 
     accounts() {
       return this.$store.getters.accounts;
+    },
+
+    transfering() {
+      return this.$store.getters.transfering;
+    },
+
+    cash() {
+      return this.$store.getters.cash;
     }
   },
 
@@ -176,7 +186,24 @@ export default {
       this.passwordInput = "";
     },
 
-    transfer() {}
+    transfer(transferedAccount) {
+      if (!this.transfering) {
+        this.$store.dispatch("transferingTrue");
+        let i = 0;
+        let interval = setInterval(() => {
+          this.$store.dispatch("incrementTransferingLevel", transferedAccount);
+          // TODO : Réétablir les bonnes valeurs de "i" ici et le niveau d'incrémentation dans le store
+          i += 1;
+          if (i == 10) {
+            clearInterval(interval);
+            this.$store.dispatch("transferingFalse");
+            this.$store.dispatch("transferAccount", transferedAccount);
+            this.$store.dispatch("updateFirestoreAccount", transferedAccount);
+            this.$store.dispatch("updateUserCash", transferedAccount.cash);
+          }
+        }, 1000);
+      }
+    }
   }
 };
 </script>
