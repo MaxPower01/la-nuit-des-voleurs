@@ -57,6 +57,12 @@ Par la suite, dans le fichier où firebase doit être utilisé, l'importer avec 
 import { fb, db } from "../firebase";
 ```
 
+### Firebase tools
+
+```
+npm install -g firebase-tools
+```
+
 ### Element UI
 
 ```
