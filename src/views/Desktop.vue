@@ -344,7 +344,7 @@ input:focus {
   display: flex;
   justify-content: flex-end;
 }
-.button-add {
+/* .button-add {
   background-color: #f8f8f8;
   border: 2px solid #a0a0a0;
   border-radius: 16px;
@@ -358,6 +358,23 @@ input:focus {
   text-align: center;
   display: flex;
   justify-content: flex-end;
+} */
+
+button {
+  background-color: #ececec;
+  border: 2px solid #a0a0a0;
+  border-radius: 9px;
+  color: #a0a0a0;
+  text-decoration: none;
+  margin-top: 35px !important;
+  padding: 7px 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+  cursor: pointer;
+  font-family: "Share Tech Mono", monospace;
+  text-align: center;
+  font-size: 1em;
+  margin-top: 2%;
 }
 .cashTotal {
   margin-top: 10%;
