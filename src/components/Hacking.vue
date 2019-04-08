@@ -15,7 +15,7 @@
         ></keyboard>
       </div>
     </div>
-    <button @click="reset">RESET</button>
+    <!-- <button @click="reset">RESET</button> -->
   </div>
 </template>
 
@@ -31,7 +31,10 @@ export default {
 
   data() {
     return {
-      input: ""
+      input: "",
+      success: false,
+      warning: false,
+      error: false
     };
   },
 
@@ -58,31 +61,31 @@ export default {
       if (this.input.trim().length === 0) {
         return;
       }
-
       this.accounts.forEach(account => {
-        if (this.input === account.number) {
+        if (this.input == account.number) {
           if (account.available === false) {
+            this.success = true;
             this.$store.dispatch("accessAccount", account);
             this.$store.dispatch("updateFirestoreAccount", account);
-            this.getAccountCash(account.cash);
-            this.successNotification();
           } else {
-            this.warningNotification();
+            this.warning = true;
           }
         } else {
-          this.failureNotification();
+          this.error = true;
         }
       });
-
-      if (this.input === "0123456789" && !this.timerIsActive) {
+      if (this.input == "64685971" && !this.timerIsActive) {
         this.startTimer();
+      } else if (this.input == "81975268") {
+        this.reset();
+      } else if (this.success == true) {
+        this.successNotification();
+      } else if (this.warning == true) {
+        this.warningNotification();
+      } else if (this.error == true) {
+        this.failureNotification();
       }
-
       this.resetInputCode();
-    },
-
-    getAccountCash(cash) {
-      this.$store.dispatch("getAccountCash", cash);
     },
 
     startTimer() {
@@ -97,6 +100,9 @@ export default {
 
     resetInputCode() {
       this.input = "";
+      this.success = false;
+      this.warning = false;
+      this.error = false;
     },
 
     successNotification() {
@@ -128,9 +134,11 @@ export default {
 
 <style scoped lang="scss">
 $timer-height: 80px;
+$menu-height: 100px;
 
 .hacking {
   padding-top: $timer-height;
+  padding-bottom: $menu-height;
 }
 
 .container {

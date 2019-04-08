@@ -26,10 +26,6 @@ export default {
     BottomMenu
   },
 
-  created() {
-    this.$store.dispatch("getFirestoreAccounts");
-  },
-
   computed: {
     activeSection() {
       return this.$store.getters.menu.activeSection;

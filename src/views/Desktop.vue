@@ -19,43 +19,47 @@
           />
         </div>
         <!-- Une compilation du cash total ammasser dans notre téléversement -->
-        <h1 class="cashTotal">20 000$</h1>
+        <h1 class="cashTotal">Argent transféré</h1>
+        <p class="cashTotal">{{ cash }} $</p>
         <!-- une option pour se déconnecter lorsqu'on a fini -->
         <h4 class="deconnexion">Déconnexion</h4>
       </div>
       <!-- ./Menu -->
 
-      <!-- Données -->
-      <div class="data-container">
+      <!-- Nouveau compte -->
+      <div class="new-account-container">
         <div class="flex-container">
           <div class="text-center">
             <h3>Numéro de compte</h3>
-            <input type="text" />
+            <input
+              v-model="accountInput"
+              type="text"
+              placeholder="Numéro de compte"
+            />
           </div>
           <div class="text-center">
             <h3>Mot de passe</h3>
-            <input type="password" />
-          </div>
-          <div class="text-center-alt">
-            <p>vers le compte</p>
-          </div>
-          <div class="text-center">
-            <h3>ID du compte</h3>
-            <input type="text" />
+            <input
+              v-model="passwordInput"
+              type="password"
+              placeholder="Mot de passe"
+            />
           </div>
         </div>
         <div class="button-container">
-          <button class="button-add">Entrez</button>
+          <button class="button-add" @click="addAccount">
+            Accéder au compte
+          </button>
         </div>
       </div>
-      <!-- Données -->
+      <!-- ./Nouveau compte -->
 
       <!-- Liste -->
       <div class="list">
         <!-- Account -->
         <div
           class="account"
-          v-for="account in hackedAccounts"
+          v-for="account in availableAccounts"
           :key="account.id"
         >
           <!-- Informations -->
@@ -69,28 +73,34 @@
               <p>{{ account.bank }}</p>
             </div>
             <div class="account-data">
-              <h4>Montant</h4>
+              <h4>Solde</h4>
               <p>{{ account.cash }} $</p>
             </div>
             <div class="account-data">
               <h4>État</h4>
-              <p v-if="progressBarWidth == 100">Téléversement terminé</p>
-              <p v-else>{{ etat }}</p>
+              <p v-if="account.transfered == true">Transféré</p>
+              <p v-else>Accessible</p>
             </div>
           </div>
           <!-- ./Informations -->
 
           <!-- Téléchargement -->
           <div class="loading-container">
-            <div class="progress-bar" :style="progressBarPercentage"></div>
+            <div
+              class="progress-bar"
+              :style="{ width: account.transferingLevel + '%' }"
+            ></div>
           </div>
           <button
-            v-if="progressBarWidth == 100"
-            class="account-button-terminer"
+            v-if="progressBarWidth != 100"
+            class="account-button"
+            @click="transfer(account)"
           >
-            Téléversement terminé
+            Transférer
           </button>
-          <button v-else class="account-button">Téléverser</button>
+          <button v-else class="account-button-terminer">
+            Transfert terminé
+          </button>
           <!-- ./Téléchargement -->
         </div>
         <!-- ./Account -->
@@ -114,8 +124,10 @@ export default {
   data() {
     return {
       connected: false,
-      progressBarWidth: 0,
-      etat: "Pas Transferé"
+      accountInput: "",
+      passwordInput: "",
+      availableAccounts: [],
+      progressBarWidth: 0
     };
   },
 
@@ -124,22 +136,73 @@ export default {
       return "width:" + this.progressBarWidth + "%";
     },
 
-    hackedAccounts() {
-      return this.$store.getters.hackedAccounts;
+    accounts() {
+      return this.$store.getters.accounts;
+    },
+
+    transfering() {
+      return this.$store.getters.transfering;
+    },
+
+    cash() {
+      return this.$store.getters.cash;
     }
   },
 
   created() {
-    this.$store.dispatch("getFirestoreAccounts");
+    this.$store.dispatch("getFirestoreData");
   },
 
   methods: {
+    // TODO : Mettre à jour l'utilisateur et les comptes lorsqu'il y a transfert
     connect() {
       this.connected = true;
     },
 
-    updateAccounts() {
-      this.accounts = this.hackedAccounts;
+    addAccount() {
+      let number;
+
+      this.availableAccounts.forEach(account => {
+        if (account.number == this.accountInput) {
+          number = account.number;
+        }
+      });
+
+      this.accounts.forEach(account => {
+        if (
+          account.number == this.accountInput &&
+          account.password == this.passwordInput &&
+          account.number != number
+        ) {
+          this.availableAccounts.push(account);
+        }
+      });
+
+      this.resetAccountInputs();
+    },
+
+    resetAccountInputs() {
+      this.accountInput = "";
+      this.passwordInput = "";
+    },
+
+    transfer(transferedAccount) {
+      if (!this.transfering) {
+        this.$store.dispatch("transferingTrue");
+        let i = 0;
+        let interval = setInterval(() => {
+          this.$store.dispatch("incrementTransferingLevel", transferedAccount);
+          // TODO : Réétablir les bonnes valeurs de "i" ici et le niveau d'incrémentation dans le store
+          i += 1;
+          if (i == 10) {
+            clearInterval(interval);
+            this.$store.dispatch("transferingFalse");
+            this.$store.dispatch("transferAccount", transferedAccount);
+            this.$store.dispatch("updateFirestoreAccount", transferedAccount);
+            this.$store.dispatch("updateUserCash", transferedAccount.cash);
+          }
+        }, 1000);
+      }
     }
   }
 };
@@ -254,7 +317,7 @@ input:focus {
   border-bottom: 1px solid #696969;
 }
 
-.data-container {
+.new-account-container {
   background-color: #ececec;
   /* height: 100%; */
   padding-left: 20%;
@@ -281,7 +344,7 @@ input:focus {
   display: flex;
   justify-content: flex-end;
 }
-.button-add {
+/* .button-add {
   background-color: #f8f8f8;
   border: 2px solid #a0a0a0;
   border-radius: 16px;
@@ -295,6 +358,23 @@ input:focus {
   text-align: center;
   display: flex;
   justify-content: flex-end;
+} */
+
+button {
+  background-color: #ececec;
+  border: 2px solid #a0a0a0;
+  border-radius: 9px;
+  color: #a0a0a0;
+  text-decoration: none;
+  margin-top: 35px !important;
+  padding: 7px 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+  cursor: pointer;
+  font-family: "Share Tech Mono", monospace;
+  text-align: center;
+  font-size: 1em;
+  margin-top: 2%;
 }
 .cashTotal {
   margin-top: 10%;

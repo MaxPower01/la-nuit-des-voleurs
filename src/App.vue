@@ -4,6 +4,14 @@
   </div>
 </template>
 
+<script>
+export default {
+  created() {
+    this.$store.dispatch("getFirestoreData");
+  }
+};
+</script>
+
 <style lang="scss">
 body {
   font-family: "Share Tech Mono", monospace;

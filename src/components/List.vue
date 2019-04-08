@@ -50,15 +50,9 @@
 export default {
   name: "list",
 
-  data() {
-    return {
-      hackingInProgress: false
-    };
-  },
-
   computed: {
-    progressBarPercentage() {
-      return "width:" + this.progressBarWidth + "%";
+    hacking() {
+      return this.$store.getters.hacking;
     },
 
     availableAccounts() {
@@ -72,17 +66,16 @@ export default {
 
   methods: {
     hack(hackedAccount) {
-      // À FAIRE : "hackingInProgress" doit être global et non local
-      if (!this.hackingInProgress) {
-        this.hackingInProgress = true;
+      if (!this.hacking) {
+        this.$store.dispatch("hackingTrue");
         let i = 0;
         let interval = setInterval(() => {
           this.$store.dispatch("incrementhackingLevel", hackedAccount);
-          // À FAIRE : Réétablir les bonnes valeurs de "i" ici et le niveau d'incrémentation dans le store
+          // TODO : Réétablir les bonnes valeurs de "i" ici et le niveau d'incrémentation dans le store
           i += 1;
           if (i == 10) {
             clearInterval(interval);
-            this.hackingInProgress = false;
+            this.$store.dispatch("hackingFalse");
             this.$store.dispatch("hackAccount", hackedAccount);
             this.$store.dispatch("updateFirestoreAccount", hackedAccount);
           }
@@ -95,9 +88,11 @@ export default {
 
 <style scoped lang="scss">
 $timer-height: 80px;
+$menu-height: 100px;
 
 .list {
   padding-top: $timer-height;
+  padding-bottom: $menu-height;
 }
 
 .account-container {

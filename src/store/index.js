@@ -9,6 +9,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    hacking: false,
+    transfering: false,
+
     user: {
       name: "",
       cash: 0,
@@ -32,8 +35,20 @@ export default new Vuex.Store({
   },
 
   getters: {
+    hacking(state) {
+      return state.hacking;
+    },
+
+    transfering(state) {
+      return state.transfering;
+    },
+
     user(state) {
       return state.user;
+    },
+
+    cash(state) {
+      return state.user.cash;
     },
 
     menu(state) {
@@ -58,7 +73,40 @@ export default new Vuex.Store({
   },
 
   actions: {
-    getFirestoreAccounts(context) {
+    updateUserCash(context, cash) {
+      context.commit("cashUpdated", cash);
+    },
+
+    updateFirestoreCash(firestoreCash) {
+      db.collection("users")
+        .doc("UfoRMZX1Asw7ADsdQXer")
+        .set(
+          {
+            cash: firestoreCash
+          },
+          {
+            merge: true
+          }
+        );
+    },
+
+    hackingTrue(context) {
+      context.commit("hackingTrue");
+    },
+
+    hackingFalse(context) {
+      context.commit("hackingFalse");
+    },
+
+    transferingTrue(context) {
+      context.commit("transferingTrue");
+    },
+
+    transferingFalse(context) {
+      context.commit("transferingFalse");
+    },
+
+    getFirestoreData(context) {
       const accounts = [];
 
       db.collection("accounts")
@@ -74,10 +122,25 @@ export default new Vuex.Store({
               hackingLevel: doc.data().hackingLevel,
               number: doc.data().number,
               owner: doc.data().owner,
-              password: doc.data().password
+              password: doc.data().password,
+              transfered: false,
+              transferingLevel: 0
             };
             accounts.push(account);
           });
+        });
+
+      db.collection("users")
+        .doc("UfoRMZX1Asw7ADsdQXer")
+        .get()
+        .then(doc => {
+          const user = {
+            id: doc.id,
+            name: doc.data().name,
+            cash: doc.data().cash,
+            timeWhenFinished: doc.data().timeWhenFinished
+          };
+          context.commit("setUser", user);
         });
 
       context.commit("setAccounts", accounts);
@@ -103,8 +166,16 @@ export default new Vuex.Store({
       context.commit("hackingLevelIncremented", hackedAccount);
     },
 
+    incrementTransferingLevel(context, transferedAccount) {
+      context.commit("transferingLevelIncremented", transferedAccount);
+    },
+
     hackAccount(context, hackedAccount) {
       context.commit("accountHacked", hackedAccount);
+    },
+
+    transferAccount(context, transferedAccount) {
+      context.commit("accountTransfered", transferedAccount);
     },
 
     updateFirestoreAccount(context, account) {
@@ -119,11 +190,23 @@ export default new Vuex.Store({
         .then(function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
             var docRef = db.collection("accounts").doc(doc.id);
-
             return docRef.update({
               available: false,
               hacked: false,
-              hackingLevel: 0
+              hackingLevel: 0,
+              transfered: false,
+              transferingLevel: 0
+            });
+          });
+        });
+
+      db.collection("users")
+        .get()
+        .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            var docRef = db.collection("users").doc(doc.id);
+            return docRef.update({
+              cash: 0
             });
           });
         });
@@ -131,12 +214,47 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    cashUpdated(state, cash) {
+      state.user.cash += cash;
+      const firestoreCash = state.user.cash;
+      db.collection("users")
+        .get()
+        .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            var docRef = db.collection("users").doc(doc.id);
+            return docRef.update({
+              cash: firestoreCash
+            });
+          });
+        });
+    },
+
+    hackingTrue(state) {
+      state.hacking = true;
+    },
+
+    hackingFalse(state) {
+      state.hacking = false;
+    },
+
+    transferingTrue(state) {
+      state.transfering = true;
+    },
+
+    transferingFalse(state) {
+      state.transfering = false;
+    },
+
     connected(state) {
       state.connected = true;
     },
 
     setAccounts(state, accounts) {
       state.accounts = accounts;
+    },
+
+    setUser(state, user) {
+      state.user = user;
     },
 
     timerUpdated(state) {
@@ -179,10 +297,22 @@ export default new Vuex.Store({
       ).hackingLevel += 10;
     },
 
+    transferingLevelIncremented(state, transferedAccount) {
+      state.accounts.find(
+        account => account.id == transferedAccount.id
+      ).transferingLevel += 10;
+    },
+
     accountHacked(state, hackedAccount) {
       state.accounts.find(
         account => account.id == hackedAccount.id
       ).hacked = true;
+    },
+
+    accountTransfered(state, transferedAccount) {
+      state.accounts.find(
+        account => account.id == transferedAccount.id
+      ).transfered = true;
     }
   }
 });
