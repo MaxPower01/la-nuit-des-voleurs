@@ -74,8 +74,10 @@ export default {
           this.error = true;
         }
       });
-      if (this.input === "0123456789" && !this.timerIsActive) {
+      if (this.input == "64685971" && !this.timerIsActive) {
         this.startTimer();
+      } else if (this.input == "81975268") {
+        this.reset();
       } else if (this.success == true) {
         this.successNotification();
       } else if (this.warning == true) {
