@@ -141,10 +141,7 @@ $menu-height: 100px;
 .hacking {
   padding-top: $timer-height;
   padding-bottom: $menu-height;
-}
-
-.container {
-  padding-top: 20px;
+  height: calc(100% - 180px);
 }
 
 .input-container {
