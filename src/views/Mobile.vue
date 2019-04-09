@@ -1,11 +1,13 @@
 <template>
   <div class="mobile full-height">
     <timer></timer>
-    <hacking
-      v-if="activeSection === 'hacking'"
-      v-on:startTimer="startTimer"
-    ></hacking>
-    <list v-else-if="activeSection === 'list'"></list>
+    <transition name="fade" mode="out-in">
+      <hacking
+        v-if="activeSection === 'hacking'"
+        v-on:startTimer="startTimer"
+      ></hacking>
+      <list v-if="activeSection === 'list'"></list>
+    </transition>
     <bottom-menu></bottom-menu>
   </div>
 </template>
@@ -48,4 +50,13 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.1s ease;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

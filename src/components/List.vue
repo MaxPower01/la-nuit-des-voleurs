@@ -32,7 +32,7 @@
             :style="{ width: account.hackingLevel + '%' }"
           ></div>
         </div>
-        <div class="buttons">
+        <div>
           <span
             readonly
             v-if="account.hackingLevel == 0"
@@ -146,5 +146,14 @@ td {
   height: 100%;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.1s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
