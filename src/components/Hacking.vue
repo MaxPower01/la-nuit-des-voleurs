@@ -31,6 +31,10 @@ export default {
     Keyboard
   },
 
+  created() {
+    this.startTimer();
+  },
+
   data() {
     return {
       input: "",
@@ -55,6 +59,7 @@ export default {
   },
 
   methods: {
+    // À FAIRE : Démarrer le timer seulement lorsque "List" est créé et remettre le temps à zéro lorsqu,on appel "reset"
     reset() {
       this.$store.dispatch("reset");
     },
@@ -76,9 +81,7 @@ export default {
           this.error = true;
         }
       });
-      if (this.input == "64685971" && !this.timerIsActive) {
-        this.startTimer();
-      } else if (this.input == "81975268") {
+      if (this.input == "666") {
         this.reset();
       } else if (this.success == true) {
         this.successNotification();

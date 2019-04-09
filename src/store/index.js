@@ -26,9 +26,9 @@ export default new Vuex.Store({
       active: false,
       timeLeft: {
         seconds: 0,
-        minutes: 60,
-        display: "60 : 00"
-      }
+        minutes: 60
+      },
+      display: ""
     },
 
     accounts: []
@@ -128,6 +128,7 @@ export default new Vuex.Store({
             };
             accounts.push(account);
           });
+          context.commit("setAccounts", accounts);
         });
 
       db.collection("users")
@@ -143,7 +144,16 @@ export default new Vuex.Store({
           context.commit("setUser", user);
         });
 
-      context.commit("setAccounts", accounts);
+      db.collection("pieceMaitresse")
+        .doc("5VGRMPkX5JKpsxLDTDFw")
+        .get()
+        .then(doc => {
+          const timeLeft = {
+            seconds: doc.data().timeLeft.seconds,
+            minutes: doc.data().timeLeft.minutes
+          };
+          context.commit("setTimer", timeLeft);
+        });
     },
 
     updateTimer(context) {
@@ -210,6 +220,20 @@ export default new Vuex.Store({
             });
           });
         });
+
+      db.collection("pieceMaitresse")
+        .doc("5VGRMPkX5JKpsxLDTDFw")
+        .set(
+          {
+            timeLeft: {
+              seconds: 0,
+              minutes: 60
+            }
+          },
+          {
+            merge: true
+          }
+        );
     }
   },
 
@@ -257,23 +281,48 @@ export default new Vuex.Store({
       state.user = user;
     },
 
+    setTimer(state, timeLeft) {
+      state.timer.timeLeft = timeLeft;
+    },
+
     timerUpdated(state) {
+      let seconds;
+      let minutes;
+
       state.timer.timeLeft.seconds--;
+      seconds = state.timer.timeLeft.seconds;
+      minutes = state.timer.timeLeft.minutes;
 
       if (state.timer.timeLeft.seconds < 0) {
         state.timer.timeLeft.minutes--;
         state.timer.timeLeft.seconds = 59;
+        seconds = state.timer.timeLeft.seconds;
+        minutes = state.timer.timeLeft.minutes;
       }
 
       if (state.timer.timeLeft.seconds < 10) {
-        state.timer.timeLeft.display = `${state.timer.timeLeft.minutes} : 0${
+        state.timer.display = `${state.timer.timeLeft.minutes} : 0${
           state.timer.timeLeft.seconds
         }`;
       } else {
-        state.timer.timeLeft.display = `${state.timer.timeLeft.minutes} : ${
+        state.timer.display = `${state.timer.timeLeft.minutes} : ${
           state.timer.timeLeft.seconds
         }`;
       }
+
+      db.collection("pieceMaitresse")
+        .doc("5VGRMPkX5JKpsxLDTDFw")
+        .set(
+          {
+            timeLeft: {
+              seconds: seconds,
+              minutes: minutes
+            }
+          },
+          {
+            merge: true
+          }
+        );
     },
 
     accountAccessed(state, accessedAccount) {
@@ -294,7 +343,7 @@ export default new Vuex.Store({
     hackingLevelIncremented(state, hackedAccount) {
       state.accounts.find(
         account => account.id == hackedAccount.id
-      ).hackingLevel += 10;
+      ).hackingLevel += 1;
     },
 
     transferingLevelIncremented(state, transferedAccount) {

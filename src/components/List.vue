@@ -71,7 +71,7 @@ export default {
           this.$store.dispatch("incrementhackingLevel", hackedAccount);
           // TODO : Réétablir les bonnes valeurs de "i" ici et le niveau d'incrémentation dans le store
           i += 1;
-          if (i == 10) {
+          if (i == 100) {
             clearInterval(interval);
             this.$store.dispatch("hackingFalse");
             this.$store.dispatch("hackAccount", hackedAccount);
@@ -158,47 +158,6 @@ td {
 }
 
 // PROGRESS BAR
-.progress {
-  padding: 6px;
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 6px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25),
-    0 1px rgba(255, 255, 255, 0.08);
-}
-
-.progress-bar {
-  height: 18px;
-  background-color: #ee303c;
-  border-radius: 4px;
-  transition: 0.4s linear;
-  transition-property: width, background-color;
-}
-
-.progress-striped .progress-bar {
-  background-color: #fcbc51;
-  width: 100%;
-  background-image: linear-gradient(
-    45deg,
-    rgb(252, 163, 17) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgb(252, 163, 17) 50%,
-    rgb(252, 163, 17) 75%,
-    transparent 75%,
-    transparent
-  );
-  animation: progressAnimationStrike 6s;
-}
-
-@keyframes progressAnimationStrike {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
 .progress2 {
   padding: 6px;
   border-radius: 30px;
@@ -215,7 +174,7 @@ td {
     rgba(255, 255, 255, 0.3),
     rgba(255, 255, 255, 0.05)
   );
-  transition: 0.4s linear;
+  transition: 1s linear;
   transition-property: width, background-color;
 }
 
@@ -232,101 +191,6 @@ td {
   100% {
     width: 85%;
     background-color: #56c2b0;
-  }
-}
-
-$green: #4cd964;
-$turquoise: #5ac8fa;
-$blue: #007aff;
-$light-blue: #7dc8e8;
-$purple: #5856d6;
-$red: #ff2d55;
-
-.progress-bar3 {
-  height: 18px;
-  border-radius: 4px;
-  background-image: linear-gradient(
-    to right,
-    $green,
-    $turquoise,
-    $blue,
-    $light-blue,
-    $purple,
-    $red
-  );
-  transition: 0.4s linear;
-  transition-property: width, background-color;
-}
-
-.progress-infinite .progress-bar3 {
-  width: 100%;
-  background-image: linear-gradient(
-    to right,
-    $green,
-    $turquoise,
-    $blue,
-    $light-blue,
-    $purple,
-    $red
-  );
-  animation: colorAnimation 1s infinite;
-}
-
-@keyframes colorAnimation {
-  0% {
-    background-image: linear-gradient(
-      to right,
-      $green,
-      $turquoise,
-      $blue,
-      $light-blue,
-      $purple,
-      $red
-    );
-  }
-  20% {
-    background-image: linear-gradient(
-      to right,
-      $turquoise,
-      $blue,
-      $light-blue,
-      $purple,
-      $red,
-      $green
-    );
-  }
-  40% {
-    background-image: linear-gradient(
-      to right,
-      $blue,
-      $light-blue,
-      $purple,
-      $red,
-      $green,
-      $turquoise
-    );
-  }
-  60% {
-    background-image: linear-gradient(
-      to right,
-      $light-blue,
-      $purple,
-      $red,
-      $green,
-      $turquoise,
-      $blue
-    );
-  }
-  100% {
-    background-image: linear-gradient(
-      to right,
-      $purple,
-      $red,
-      $green,
-      $turquoise,
-      $blue,
-      $light-blue
-    );
   }
 }
 </style>
