@@ -1,0 +1,32 @@
+[debug] [2019-04-07T00:16:05.347Z] ----------------------------------------------------------------------
+[debug] [2019-04-07T00:16:05.349Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Maxime\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2019-04-07T00:16:05.349Z] CLI Version:   6.5.3
+[debug] [2019-04-07T00:16:05.349Z] Platform:      win32
+[debug] [2019-04-07T00:16:05.349Z] Node Version:  v8.11.3
+[debug] [2019-04-07T00:16:05.350Z] Time:          Sat Apr 06 2019 20:16:05 GMT-0400 (Eastern Summer Time)
+[debug] [2019-04-07T00:16:05.350Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-04-07T00:16:05.356Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-04-07T00:16:05.357Z] > authorizing via signed-in user
+[debug] [2019-04-07T00:16:05.357Z] [iam] checking project mad-max-power for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2019-04-07T00:16:05.358Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/mad-max-power:testIamPermissions  
+
+[debug] [2019-04-07T00:16:05.861Z] <<< HTTP RESPONSE 200
+[debug] [2019-04-07T00:16:05.863Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/mad-max-power  
+ 
+[debug] [2019-04-07T00:16:06.151Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'mad-max-power'...
+[info] 
+[info] i  deploying database, storage, firestore, functions, hosting
+[debug] [2019-04-07T00:16:06.547Z] TypeError: Path must be a string. Received undefined
+    at assertPath (path.js:28:11)
+    at Object.join (path.js:489:7)
+    at Config.path (C:\Users\Maxime\AppData\Roaming\npm\node_modules\firebase-tools\lib\config.js:142:39)
+    at getChildEnvironment (C:\Users\Maxime\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\lifecycleHooks.js:50:49)
+    at runTargetCommands (C:\Users\Maxime\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\lifecycleHooks.js:71:14)
+    at C:\Users\Maxime\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\lifecycleHooks.js:103:24
+    at <anonymous>
+    at process._tickDomainCallback (internal/process/next_tick.js:228:7)
+[error] 
+[error] Error: An unexpected error has occurred.
