@@ -15,6 +15,7 @@
         ></keyboard>
       </div>
     </div>
+    <!-- <button @click="reset">RESET</button> -->
   </div>
 </template>
 
@@ -73,9 +74,9 @@ export default {
           this.error = true;
         }
       });
-      if (this.input === "64685971" && !this.timerIsActive) {
+      if (this.input == "64685971" && !this.timerIsActive) {
         this.startTimer();
-      } else if (this.input === "81975268") {
+      } else if (this.input == "81975268") {
         this.reset();
       } else if (this.success == true) {
         this.successNotification();
