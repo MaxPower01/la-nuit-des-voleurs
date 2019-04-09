@@ -2,12 +2,14 @@
   <div class="hacking">
     <div class="flex-container text-center">
       <div class="container">
-        <input
-          readonly
-          type="text"
-          v-model="input"
-          placeholder="Numéro de compte"
-        />
+        <div class="input-container">
+          <input
+            readonly
+            type="text"
+            v-model="input"
+            placeholder="Numéro de compte"
+          />
+        </div>
         <keyboard
           v-on:keyPressed="updateInput($event)"
           v-on:codeSubmitted="verifyCode()"
@@ -145,11 +147,16 @@ $menu-height: 100px;
   padding-top: 20px;
 }
 
+.input-container {
+  padding: 10px;
+}
+
 input[type="text"] {
   background-color: #242424;
   box-sizing: border-box;
-  border: 2px solid #f0f0f0;
+  border: 2px solid #56c2b0;
   color: #f0f0f0;
+  width: 100%;
   padding: 15px 10px;
   text-align: center;
   font-family: "Share Tech Mono", monospace;

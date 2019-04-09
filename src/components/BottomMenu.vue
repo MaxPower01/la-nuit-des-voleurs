@@ -46,10 +46,12 @@ export default {
   methods: {
     displayHacking() {
       this.$store.dispatch("displaySection", "hacking");
+      navigator.vibrate(10);
     },
 
     displayList() {
       this.$store.dispatch("displaySection", "list");
+      navigator.vibrate(10);
     }
   }
 };
@@ -64,7 +66,7 @@ $icon-container-width: 50%;
   bottom: 0;
   position: fixed;
   height: 100px;
-  border-top: solid;
+  border-top: solid 2px;
   overflow: hidden;
 }
 

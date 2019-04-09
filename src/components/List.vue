@@ -7,21 +7,13 @@
     >
       <table>
         <tr>
-          <th>Propriétaire</th>
-          <td>{{ account.owner }}</td>
+          <th>Numéro de compte :</th>
+          <td align="right">{{ account.number }}</td>
         </tr>
         <tr>
-          <th>Banque</th>
-          <td>{{ account.bank }}</td>
-        </tr>
-        <tr>
-          <th>Compte</th>
-          <td>{{ account.number }}</td>
-        </tr>
-        <tr>
-          <th>Mot de passe</th>
-          <td v-if="!account.hacked">**********</td>
-          <td v-else>{{ account.password }}</td>
+          <th>Mot de passe :</th>
+          <td align="right" v-if="!account.hacked">**********</td>
+          <td align="right" v-else>{{ account.password }}</td>
         </tr>
       </table>
 
@@ -67,6 +59,7 @@ export default {
   methods: {
     hack(hackedAccount) {
       if (!this.hacking) {
+        navigator.vibrate(10);
         this.$store.dispatch("hackingTrue");
         let i = 0;
         let interval = setInterval(() => {

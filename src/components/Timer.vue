@@ -20,7 +20,7 @@ export default {
 
 <style scoped lang="scss">
 .timer {
-  border-bottom: solid;
+  border-bottom: solid 2px;
   top: 0;
   position: fixed;
   width: 100%;
