@@ -134,7 +134,7 @@ td {
 
 .account-button {
   background-color: #56c2b04b;
-  border: solid;
+  border: solid 1px;
   cursor: pointer;
   color: #56c2b0;
   text-decoration: none;

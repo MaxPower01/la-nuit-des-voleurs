@@ -106,7 +106,8 @@ export default {
       this.$notify({
         title: "Succès",
         message: "Accès au compte autorisé.",
-        type: "success"
+        type: "success",
+        offset: 100
       });
     },
 
@@ -114,7 +115,8 @@ export default {
       this.$notify({
         title: "Avertissement",
         message: "Compte déjà accessible.",
-        type: "warning"
+        type: "warning",
+        offset: 100
       });
     },
 
@@ -122,7 +124,8 @@ export default {
       this.$notify({
         title: "Erreur",
         message: "Numéro de compte invalide.",
-        type: "error"
+        type: "error",
+        offset: 100
       });
     }
   }
