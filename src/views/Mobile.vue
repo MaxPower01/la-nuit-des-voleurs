@@ -18,7 +18,6 @@ import Timer from "@/components/Timer.vue";
 import Hacking from "@/components/Hacking.vue";
 import List from "@/components/List.vue";
 import BottomMenu from "@/components/BottomMenu.vue";
-import { clearInterval } from "timers";
 
 export default {
   name: "mobile",
@@ -50,8 +49,8 @@ export default {
     },
 
     stopTimer() {
-      alert("etest");
-      // clearInterval(this.$options.interval);
+      clearInterval(this.$options.interval);
+      this.$store.dispatch("resetTimer");
     }
   },
 

@@ -157,6 +157,10 @@ export default new Vuex.Store({
       context.commit("timerUpdated");
     },
 
+    resetTimer(context) {
+      context.commit("timerReset");
+    },
+
     accessAccount(context, accessedAccount) {
       context.commit("accountAccessed", accessedAccount);
     },
@@ -314,6 +318,25 @@ export default new Vuex.Store({
             timeLeft: {
               seconds: seconds,
               minutes: minutes
+            }
+          },
+          {
+            merge: true
+          }
+        );
+    },
+
+    timerReset(state) {
+      state.timer.timeLeft.minutes = 60;
+      state.timer.timeLeft.seconds = 0;
+
+      db.collection("pieceMaitresse")
+        .doc("5VGRMPkX5JKpsxLDTDFw")
+        .set(
+          {
+            timeLeft: {
+              seconds: 0,
+              minutes: 60
             }
           },
           {

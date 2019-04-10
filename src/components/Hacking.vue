@@ -56,8 +56,8 @@ export default {
 
   methods: {
     reset() {
-      this.$store.dispatch("reset");
       this.$emit("stopTimer");
+      this.$store.dispatch("reset");
     },
 
     verifyCode() {
