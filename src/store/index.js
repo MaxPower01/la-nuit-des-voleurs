@@ -24,10 +24,7 @@ export default new Vuex.Store({
 
     timer: {
       active: false,
-      timeLeft: {
-        seconds: 0,
-        minutes: 60
-      },
+      timeLeft: {},
       display: ""
     },
 

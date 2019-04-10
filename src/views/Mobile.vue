@@ -5,6 +5,7 @@
       <hacking
         v-if="activeSection === 'hacking'"
         v-on:startTimer="startTimer"
+        v-on:stopTimer="stopTimer"
       ></hacking>
       <list v-if="activeSection === 'list'"></list>
     </transition>
@@ -17,6 +18,7 @@ import Timer from "@/components/Timer.vue";
 import Hacking from "@/components/Hacking.vue";
 import List from "@/components/List.vue";
 import BottomMenu from "@/components/BottomMenu.vue";
+import { clearInterval } from "timers";
 
 export default {
   name: "mobile",
@@ -26,6 +28,10 @@ export default {
     Hacking,
     List,
     BottomMenu
+  },
+
+  created() {
+    this.startTimer();
   },
 
   computed: {
@@ -41,6 +47,11 @@ export default {
 
     updateTimer() {
       this.$store.dispatch("updateTimer");
+    },
+
+    stopTimer() {
+      alert("etest");
+      // clearInterval(this.$options.interval);
     }
   },
 

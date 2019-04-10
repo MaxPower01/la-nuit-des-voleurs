@@ -31,10 +31,6 @@ export default {
     Keyboard
   },
 
-  created() {
-    this.startTimer();
-  },
-
   data() {
     return {
       input: "",
@@ -59,9 +55,9 @@ export default {
   },
 
   methods: {
-    // À FAIRE : Démarrer le timer seulement lorsque "List" est créé et remettre le temps à zéro lorsqu,on appel "reset"
     reset() {
       this.$store.dispatch("reset");
+      this.$emit("stopTimer");
     },
 
     verifyCode() {
@@ -91,10 +87,6 @@ export default {
         this.failureNotification();
       }
       this.resetInputCode();
-    },
-
-    startTimer() {
-      this.$emit("startTimer");
     },
 
     updateInput(keyValue) {
