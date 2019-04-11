@@ -1,5 +1,5 @@
 <template>
-  <div class="mobile full-height">
+  <div class="mobile full-height" id="particles-js">
     <timer></timer>
     <transition name="fade" mode="out-in">
       <hacking
@@ -61,10 +61,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.mobile {
+  background-image: url("../assets/coding-background-1.jpg");
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.1s ease;
 }
+
 .fade-enter,
 .fade-leave-to {
   opacity: 0;

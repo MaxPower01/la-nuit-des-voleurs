@@ -18,7 +18,6 @@ body {
   text-align: center;
   margin: 0 !important;
   padding: 0 !important;
-  background-image: url("assets/coding-background-1.jpg");
   // background-image: url("assets/background-code-binaire.jpg");
   color: #f0f0f0;
   height: 100vh; /* Fallback for browsers that do not support Custom Properties */
