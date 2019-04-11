@@ -1,6 +1,15 @@
 <template>
   <div class="mobile full-height">
-    <vue-particles color="#56c2b0" class="particles"></vue-particles>
+    <vue-particles
+      color="#56c2b0"
+      linesColor="#56c2b0"
+      :particleSize="2"
+      :particleOpacity="0.3"
+      :lineOpacity="0.3"
+      :linesDistance="200"
+      :moveSpeed="2"
+      class="particles"
+    ></vue-particles>
     <timer></timer>
     <transition name="fade" mode="out-in">
       <hacking
