@@ -63,11 +63,10 @@ $icon-container-width: 50%;
 
 .bottom-menu {
   background: #242424;
-  bottom: 0;
   position: fixed;
+  bottom: 0;
   height: 100px;
   border-top: solid 2px;
-  overflow: hidden;
 }
 
 .flex-container {

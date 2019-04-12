@@ -20,10 +20,12 @@
     <table readonly>
       <tr>
         <td v-on:click="submit">
-          <i class="el-icon-check"></i>
+          Confirmer
+          <!-- <i class="el-icon-check"></i> -->
         </td>
         <td v-on:click="resetCode">
-          <i class="el-icon-close"></i>
+          Annuler
+          <!-- <i class="el-icon-close"></i> -->
         </td>
       </tr>
     </table>

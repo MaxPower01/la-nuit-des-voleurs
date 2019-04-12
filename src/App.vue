@@ -20,8 +20,7 @@ body {
   padding: 0 !important;
   // background-image: url("assets/background-code-binaire.jpg");
   color: #f0f0f0;
-  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
-  height: calc(var(--vh, 1vh) * 100) !important;
+  height: 100vh;
   width: 100vw !important;
 }
 

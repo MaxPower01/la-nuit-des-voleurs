@@ -85,13 +85,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$timer-height: 80px;
-$menu-height: 100px;
+$timer-height: 82px;
+$menu-height: 102px;
 
 .list {
   padding-top: $timer-height;
   padding-bottom: $menu-height;
-  height: calc(100% - 180px);
+  height: calc(100% - 184px);
+  overflow: scroll;
 }
 
 .account-container {
@@ -133,7 +134,7 @@ td {
 }
 
 .account-button {
-  background-color: #56c2b04b;
+  background-color: #1c4b43;
   border: solid 1px;
   cursor: pointer;
   color: #56c2b0;

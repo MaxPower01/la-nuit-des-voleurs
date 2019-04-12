@@ -1,15 +1,5 @@
 <template>
   <div class="mobile full-height">
-    <vue-particles
-      color="#56c2b0"
-      linesColor="#56c2b0"
-      :particleSize="2"
-      :particleOpacity="0.3"
-      :lineOpacity="0.3"
-      :linesDistance="200"
-      :moveSpeed="2"
-      class="particles"
-    ></vue-particles>
     <timer></timer>
     <transition name="fade" mode="out-in">
       <hacking
@@ -20,6 +10,16 @@
       <list v-if="activeSection === 'list'"></list>
     </transition>
     <bottom-menu></bottom-menu>
+    <vue-particles
+      color="#56c2b0"
+      linesColor="#56c2b0"
+      :particleSize="2"
+      :particleOpacity="0.3"
+      :lineOpacity="0.3"
+      :linesDistance="200"
+      :moveSpeed="2"
+      class="particles"
+    ></vue-particles>
   </div>
 </template>
 
@@ -78,7 +78,7 @@ export default {
 .particles {
   position: absolute;
   z-index: -999;
-  height: 100%;
+  height: calc(100% - 10px);
   width: 100%;
   left: 0;
   top: 0;

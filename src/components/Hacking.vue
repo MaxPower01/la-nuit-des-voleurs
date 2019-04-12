@@ -35,7 +35,8 @@ export default {
       input: "",
       success: false,
       warning: false,
-      error: false
+      error: false,
+      notificationDuration: 2000
     };
   },
 
@@ -106,6 +107,7 @@ export default {
         title: "Succès",
         message: "Accès au compte autorisé.",
         type: "success",
+        duration: this.notificationDuration,
         offset: 100
       });
     },
@@ -115,6 +117,7 @@ export default {
         title: "Avertissement",
         message: "Compte déjà accessible.",
         type: "warning",
+        duration: this.notificationDuration,
         offset: 100
       });
     },
@@ -124,6 +127,7 @@ export default {
         title: "Erreur",
         message: "Numéro de compte invalide.",
         type: "error",
+        duration: this.notificationDuration,
         offset: 100
       });
     }
@@ -132,13 +136,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$timer-height: 80px;
-$menu-height: 100px;
+$timer-height: 82px;
+$menu-height: 102px;
 
 .hacking {
   padding-top: $timer-height;
   padding-bottom: $menu-height;
-  height: calc(100% - 180px);
+  height: calc(100% - 184px);
+  overflow: scroll;
 }
 
 .input-container {

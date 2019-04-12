@@ -1,8 +1,7 @@
 {
-  "name": "la-nuit-des-voleurs",
-  "short_name": "la-nuit-des-voleurs",
-  "icons": [
-    {
+  "name": "La Nuit des Voleurs",
+  "short_name": "Nuit des Voleurs",
+  "icons": [{
       "src": "./img/icons/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
@@ -15,6 +14,6 @@
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#242424",
+  "theme_color": "#242424"
 }
