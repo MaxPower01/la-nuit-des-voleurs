@@ -22,6 +22,7 @@ body {
   color: #f0f0f0;
   height: 100vh;
   width: 100vw !important;
+  overscroll-behavior-y: none;
 }
 
 #app {
