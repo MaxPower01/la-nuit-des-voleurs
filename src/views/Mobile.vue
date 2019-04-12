@@ -1,5 +1,15 @@
 <template>
   <div class="mobile full-height">
+    <vue-particles
+      color="#56c2b0"
+      linesColor="#56c2b0"
+      :particleSize="2"
+      :particleOpacity="0.3"
+      :lineOpacity="0.3"
+      :linesDistance="200"
+      :moveSpeed="2"
+      class="particles"
+    ></vue-particles>
     <timer></timer>
     <transition name="fade" mode="out-in">
       <hacking
@@ -61,10 +71,25 @@ export default {
 </script>
 
 <style scoped lang="scss">
+// .mobile {
+//   background-image: url("../assets/coding-background-1.jpg");
+// }
+
+.particles {
+  position: absolute;
+  z-index: -999;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background-color: #242424;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.1s ease;
 }
+
 .fade-enter,
 .fade-leave-to {
   opacity: 0;

@@ -17,7 +17,6 @@
         ></keyboard>
       </div>
     </div>
-    <!-- <button @click="reset">RESET</button> -->
   </div>
 </template>
 

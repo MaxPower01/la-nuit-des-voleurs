@@ -71,7 +71,7 @@ td {
   padding-bottom: 15px;
   padding-left: 20px;
   padding-right: 20px;
-  background-color: #56c2b04b;
+  background-color: #1c4b43;
   border: 2px solid #56c2b0;
   color: #00dbb7;
   cursor: pointer;
