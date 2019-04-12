@@ -28,6 +28,10 @@ import Timer from "@/components/Timer.vue";
 import Hacking from "@/components/Hacking.vue";
 import List from "@/components/List.vue";
 import BottomMenu from "@/components/BottomMenu.vue";
+import {
+  // fb,
+  db
+} from "../firebase";
 
 export default {
   name: "mobile",
@@ -41,6 +45,12 @@ export default {
 
   created() {
     this.startTimer();
+    db.collection("users")
+      .doc("UfoRMZX1Asw7ADsdQXer")
+      .onSnapshot(doc => {
+        // console.log("Current data: ", doc.data().cash);
+        this.$store.dispatch("updateUserCashLocal", doc.data().cash);
+      });
   },
 
   computed: {

@@ -74,6 +74,10 @@ export default new Vuex.Store({
       context.commit("cashUpdated", cash);
     },
 
+    updateUserCashLocal(context, cash) {
+      context.commit("cashLocalUpdated", cash);
+    },
+
     updateFirestoreCash(firestoreCash) {
       db.collection("users")
         .doc("UfoRMZX1Asw7ADsdQXer")
@@ -239,6 +243,10 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    cashLocalUpdated(state, cash) {
+      state.user.cash = cash;
+    },
+
     cashUpdated(state, cash) {
       state.user.cash += cash;
       const firestoreCash = state.user.cash;
