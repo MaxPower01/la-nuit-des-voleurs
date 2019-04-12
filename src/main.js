@@ -6,10 +6,12 @@ import "./registerServiceWorker";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "./registerServiceWorker";
+import VueParticles from "vue-particles";
 
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
+Vue.use(VueParticles);
 
 new Vue({
   router,
