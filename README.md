@@ -81,7 +81,7 @@ Vue.use(ElementUI);
 
 ## Développement
 
-### Aperçu en direct dans le navigateur
+### Aperçu en direct sur un serveur local
 
 ```
 npm run serve
