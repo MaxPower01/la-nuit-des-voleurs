@@ -10,7 +10,7 @@ La section **Desktop** simule un logiciel de comptabilité installé sur des ord
 
 ## Installation
 
-Ces instructions permettent d'installer une copie de l'application de façon locale à des fins de développement.
+Ces instructions permettent d'installer une copie locale de l'application à des fins de développement.
 
 ### NPM
 
