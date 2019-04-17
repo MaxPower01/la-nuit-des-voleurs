@@ -21,9 +21,9 @@ export default {
 
   data() {
     return {
-      user: "Max Power",
+      user: "Jericho.leo02",
       userInput: "",
-      password: "passw0rd",
+      password: "9377jer0143",
       passwordInput: ""
     };
   },
