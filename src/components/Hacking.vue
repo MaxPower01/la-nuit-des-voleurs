@@ -77,7 +77,7 @@ export default {
           this.error = true;
         }
       });
-      if (this.input == "666") {
+      if (this.input == "13467982") {
         this.reset();
       } else if (this.success == true) {
         this.successNotification();

@@ -377,7 +377,7 @@ export default new Vuex.Store({
     transferingLevelIncremented(state, transferedAccount) {
       state.accounts.find(
         account => account.id == transferedAccount.id
-      ).transferingLevel += 10;
+      ).transferingLevel += 1;
     },
 
     accountHacked(state, hackedAccount) {

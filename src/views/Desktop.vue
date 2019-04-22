@@ -194,14 +194,14 @@ export default {
           this.$store.dispatch("incrementTransferingLevel", transferedAccount);
           // TODO : Réétablir les bonnes valeurs de "i" ici et le niveau d'incrémentation dans le store
           i += 1;
-          if (i == 10) {
+          if (i == 100) {
             clearInterval(interval);
             this.$store.dispatch("transferingFalse");
             this.$store.dispatch("transferAccount", transferedAccount);
             this.$store.dispatch("updateFirestoreAccount", transferedAccount);
             this.$store.dispatch("updateUserCash", transferedAccount.cash);
           }
-        }, 1000);
+        }, 1500);
       }
     }
   }
